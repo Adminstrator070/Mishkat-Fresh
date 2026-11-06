@@ -7,7 +7,7 @@ export default async function(el){
   try{const d=await search(q);if(my!==seq)return;
    if(!d.count){r.innerHTML=empty('search','لا توجد نتائج','جرّب كلمة أخرى');return}
    const hl=s=>esc(s).split(esc(q)).join(`<mark>${esc(q)}</mark>`);
-   r.innerHTML=`<div class="sub" style="margin:0 2px 8px">${toAr(d.count)} نتيجة${d.count>60?' (أول ٦٠)':''}</div>`+d.matches.slice(0,60).map(m=>`<a class="card tap" style="display:block" href="#/read/${m.surah.number}/${m.numberInSurah}"><div class="sub">سورة ${sname(m.surah.number)} • آية ${toAr(m.numberInSurah)}</div><div class="quran" style="--fs:21px;--lh:2">${hl(m.text)}</div></a>`).join('')}
+   r.innerHTML=`<div class="sub" style="margin:0 2px 8px">${toAr(d.count)} نتيجة${d.count>60?' (أول ٦٠)':''}</div>`+d.matches.slice(0,60).map(m=>`<a class="card lite tap" style="display:block" href="#/read/${m.surah.number}/${m.numberInSurah}"><div class="sub">سورة ${sname(m.surah.number)} • آية ${toAr(m.numberInSurah)}</div><div class="quran" style="--fs:21px;--lh:2">${hl(m.text)}</div></a>`).join('')}
   catch{if(my===seq)r.innerHTML=empty('alert','تعذر البحث','البحث يحتاج اتصالًا بالإنترنت')}};
  inp.oninput=()=>{clearTimeout(tm);tm=setTimeout(run,450)};inp.onkeydown=e=>{if(e.key==='Enter'){clearTimeout(tm);run()}};
  el._off=()=>clearTimeout(tm);inp.focus();

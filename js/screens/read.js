@@ -1,4 +1,4 @@
-import {surah,tj,cut,surahUrl} from '../api.js';import {purge} from '../offline.js';import {S,cfg,setCfg,lastRead} from '../state.js';import {P} from '../player.js';import {icon,toAr,esc,toast,sheet,shareText} from '../ui.js';import {sname} from '../names.js';
+import {surah,tj,cut,surahUrl} from '../api.js';import {purge} from '../offline.js';import {S,cfg,setCfg,lastRead} from '../state.js';import {P} from '../player.js';import {icon,toAr,esc,toast,sheet,shareText,scrollToEl} from '../ui.js';import {sname} from '../names.js';
 const BIS='بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ';
 export default async function render(el,arg,arg2){
  el._off?.();P.on.length=0;
@@ -12,11 +12,11 @@ export default async function render(el,arg,arg2){
  <button class="iconbtn" data-go="${n+1}" ${n===114?'disabled':''} aria-label="السورة التالية">${icon('chevL')}</button></div>
  ${badCount?`<div class="card" style="border-color:var(--err)"><b>تنبيه: عدد آيات هذه السورة غير مطابق</b><div class="sub">أعد تحميل نص السورة لإصلاح المشكلة.</div><button class="btn sm" data-act="fix" style="margin-top:8px">إعادة تحميل السورة</button></div>`:''}
  <div class="shead"><div class="sub">${u.revelationType==='Meccan'?'مكية':'مدنية'} • ${toAr(u.numberOfAyahs)} آية</div><div class="sname">${sname(n)}</div>${hasBis?`<div class="quran bis" style="--fs:${c.font}px">${BIS}</div>`:''}</div>
- <div class="quran" id="q" style="--fs:${c.font}px;--lh:${c.lh}">${body}</div>
+ <div class="mushaf"><div class="quran" id="q" style="--fs:${c.font}px;--lh:${c.lh}">${body}</div></div>
  <a class="btn tonal block" style="margin-top:18px" href="#/tafsir/${n}">${icon('note',18)} تفسير السورة</a>`;
  const q=el.querySelector('#q');
  // open at a given ayah, then keep the last-read position up to date while scrolling
- if(arg2){const x=el.querySelector('#a'+arg2);if(x){x.scrollIntoView({block:'center'});x.classList.add('flash');S.set('last',{n,a:+arg2})}}
+ if(arg2){const x=el.querySelector('#a'+arg2);if(x){scrollToEl(x,'center');x.classList.add('flash');S.set('last',{n,a:+arg2})}}
  const vis=new Set();let tm;
  if('IntersectionObserver' in window){
   const io=new IntersectionObserver(es=>{es.forEach(x=>{const a=+x.target.dataset.a;x.isIntersecting?vis.add(a):vis.delete(a)});clearTimeout(tm);tm=setTimeout(()=>{if(vis.size)S.set('last',{n,a:Math.min(...vis)})},1200)},{root:document.getElementById('view'),rootMargin:'0px 0px -60% 0px'});
@@ -26,7 +26,7 @@ export default async function render(el,arg,arg2){
  // approximate follow-along while this surah is playing
  const W=u.ayahs.map(a=>cut(n,a,a.text).split(' ').length);if(hasBis)W[0]+=4;const tot=W.reduce((x,y)=>x+y,0);let last=-1;
  P.on.push(()=>{if(!cfg().follow||P.surah!==n||!P.a.duration)return;let f=P.a.currentTime/P.a.duration*tot,i=0;while(i<W.length-1&&f>=W[i]){f-=W[i];i++}
-  if(i!==last){last=i;const s=q.querySelectorAll('.ay');s.forEach((x,k)=>x.classList.toggle('cur',k===i));s[i].scrollIntoView({block:'center',behavior:'smooth'})}});
+  if(i!==last){last=i;const s=q.querySelectorAll('.ay');s.forEach((x,k)=>x.classList.toggle('cur',k===i));scrollToEl(s[i],'center',true)}});
  const ayahSheet=a=>{
   const ay=u.ayahs[a-1],text=`${cut(n,ay,ay.text)} ﴿${toAr(a)}﴾\n— سورة ${sname(n)}`,has=S.get('abm',[]).some(b=>b.n===n&&b.a===a),node=q.querySelector('#a'+a);
   node.classList.add('sel');

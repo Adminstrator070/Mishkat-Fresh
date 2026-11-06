@@ -8,10 +8,11 @@ export default async function render(el){
  el.innerHTML=`<div class="np card"><div class="art">${MARK(84)}</div><div class="np-t" id="nt"></div><div class="sub" id="nr"></div>
  <div class="seek"><input type="range" id="sk" min="0" max="1000" value="0" aria-label="التقدّم"><div class="row between sub"><span id="t1">0:00</span><span id="t2">0:00</span></div></div>
  <div class="ctl"><button class="iconbtn" id="lp" aria-label="تكرار">${icon('repeat',22)}</button><button class="iconbtn" id="pv" aria-label="السابق">${icon('prev',26)}</button><button class="playbig" id="pl" aria-label="تشغيل/إيقاف"></button><button class="iconbtn" id="nx" aria-label="التالي">${icon('next',26)}</button><button class="iconbtn" id="sl" aria-label="مؤقّت النوم">${icon('moon',22)}</button></div>
- <div class="row between"><button class="chip" id="sp"></button><button class="chip" id="pk">${icon('list',16)} اختيار سورة</button><a class="chip" href="#/downloads">${icon('download',16)} التحميلات</a></div><div class="err tc" id="er"></div></div>
+ <div class="row between"><button class="chip" id="sp"></button><button class="chip" id="pk">${icon('list',16)} اختيار سورة</button></div><div class="err tc" id="er"></div></div>
+ <div class="chips"><a class="chip" href="#/hifz">${icon('hifz',16)} التحفيظ</a><a class="chip" href="#/recite">${icon('mic',16)} التلاوة والتصحيح</a><a class="chip" href="#/downloads">${icon('download',16)} التحميلات</a></div>
  <div class="sec"><h3>القرّاء</h3></div>
  <div class="chips">${STY.map(([k,l])=>`<button class="chip" data-s="${k}">${l}</button>`).join('')}</div>
- <label class="field">${icon('search',20)}<input id="q" type="search" placeholder="ابحث عن قارئ" autocomplete="off"></label><div id="rl" class="list">${skel(3)}</div>`;
+ <label class="field">${icon('search',20)}<input id="q" type="search" placeholder="ابحث عن قارئ" autocomplete="off"></label><div id="rl" class="card list">${skel(3)}</div>`;
  const rate=()=>P.a.defaultPlaybackRate||1;
  const u=()=>{const a=P.a;
   $('#nt').textContent=P.surah?'سورة '+sname(P.surah):'اختر سورة للاستماع';

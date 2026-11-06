@@ -8,11 +8,12 @@ import audio from './screens/audio.js';import tafsir from './screens/tafsir.js';
 import times from './screens/times.js';import azkar from './screens/azkar.js';import ramadan from './screens/ramadan.js';
 import bookmarks from './screens/bookmarks.js';import hifz from './screens/hifz.js';import recite from './screens/recite.js';
 import dhikr from './screens/dhikr.js';import duas from './screens/duas.js';import tasbih from './screens/tasbih.js';
+import worship from './screens/worship.js';
 import qibla from './screens/qibla.js';import search from './screens/search.js';import about from './screens/about.js';import profile from './screens/profile.js';
-const ROUTES={home,library,read,audio,tafsir,downloads,prayer:times,azkar,dhikr,duas,tasbih,ramadan,bookmarks,hifz,recite,qibla,search,about,profile};
-const TABS=[['home','الرئيسية','home'],['library','القرآن','book'],['audio','الاستماع','headphones'],['azkar','الأذكار','beads'],['prayer','الصلاة','clock']];
-const TITLE={home:'مشكاة',library:'القرآن الكريم',read:'القراءة',audio:'الاستماع',tafsir:'التفسير',downloads:'التحميلات',prayer:'مواقيت الصلاة',azkar:'الأذكار والأدعية',dhikr:'الأذكار',duas:'الأدعية من القرآن',tasbih:'المسبحة',ramadan:'رمضان',bookmarks:'المحفوظات',hifz:'التحفيظ',recite:'التلاوة والتصحيح',qibla:'اتجاه القبلة',search:'البحث في القرآن',about:'عن مشكاة',profile:'حسابي'};
-const UP={read:'library',tafsir:'library',search:'library',downloads:'audio',dhikr:'azkar',duas:'azkar',tasbih:'azkar',ramadan:'prayer',qibla:'prayer',hifz:'home',recite:'home',bookmarks:'home',about:'profile'};
+const ROUTES={home,worship,library,read,audio,tafsir,downloads,prayer:times,azkar,dhikr,duas,tasbih,ramadan,bookmarks,hifz,recite,qibla,search,about,profile};
+const TABS=[['home','الرئيسية','home'],['library','القرآن','book'],['audio','الاستماع','headphones'],['worship','العبادة','moon'],['profile','حسابي','user']];
+const TITLE={home:'مشكاة',worship:'العبادة',library:'القرآن الكريم',read:'القراءة',audio:'الاستماع',tafsir:'التفسير',downloads:'التحميلات',prayer:'مواقيت الصلاة',azkar:'الأذكار والأدعية',dhikr:'الأذكار',duas:'الأدعية من القرآن',tasbih:'المسبحة',ramadan:'رمضان',bookmarks:'المحفوظات',hifz:'التحفيظ',recite:'التلاوة والتصحيح',qibla:'اتجاه القبلة',search:'البحث في القرآن',about:'عن مشكاة',profile:'حسابي'};
+const UP={read:'library',tafsir:'library',search:'library',bookmarks:'library',downloads:'audio',hifz:'audio',recite:'audio',prayer:'worship',azkar:'worship',dhikr:'worship',duas:'worship',tasbih:'worship',ramadan:'worship',qibla:'worship',about:'profile'};
 const $=i=>document.getElementById(i),view=$('view'),nav=$('nav'),mb=$('menu'),mini=$('mini');
 nav.innerHTML=TABS.map(([id,l,i])=>`<button data-id="${id}" aria-label="${l}"><span class="pill">${icon(i,22)}</span>${l}</button>`).join('');
 nav.onclick=e=>{const b=e.target.closest('button');if(b)location.hash='#/'+b.dataset.id};
@@ -22,8 +23,8 @@ $('av').onclick=()=>location.hash='#/profile';$('srch').onclick=()=>location.has
 mini.innerHTML=`<div class="mi"><b id="mt"></b><span class="sub" id="ms"></span></div><button class="iconbtn" data-m="pv" aria-label="السابق">${icon('prev',20)}</button><button class="iconbtn solid" data-m="pl" id="mp" aria-label="تشغيل/إيقاف"></button><button class="iconbtn" data-m="nx" aria-label="التالي">${icon('next',20)}</button><i id="mb"></i>`;
 let lastPaused=null;
 function paintMini(){
- if(!P.surah||location.hash.startsWith('#/audio')){mini.hidden=true;return}
- mini.hidden=false;$('mt').textContent='سورة '+sname(P.surah);$('ms').textContent=P.m?.reciter||'';
+ if(!P.surah||location.hash.startsWith('#/audio')){mini.hidden=true;document.body.classList.remove('has-mini');return}
+ mini.hidden=false;document.body.classList.add('has-mini');$('mt').textContent='سورة '+sname(P.surah);$('ms').textContent=P.m?.reciter||'';
  if(lastPaused!==P.a.paused){lastPaused=P.a.paused;$('mp').innerHTML=icon(P.a.paused?'play':'pause',20)}
  $('mb').style.width=(P.a.duration?P.a.currentTime/P.a.duration*100:0)+'%';
 }

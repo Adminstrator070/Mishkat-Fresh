@@ -49,3 +49,12 @@ export async function shareText(text){
  try{if(navigator.share){await navigator.share({text});return}}catch(e){if(e&&e.name==='AbortError')return}
  try{await navigator.clipboard.writeText(text);toast('تم النسخ')}catch{toast('تعذّرت المشاركة')}
 }
+// Organised sections: sect(title, icon, body, [href,label]) wraps tiles(...) or any markup.
+export const tiles=(items,cols=3)=>`<div class="tiles2 c${cols}">${items.map(([h,i,t,s])=>`<a class="tl" href="${h}"><span class="tli">${icon(i,cols>3?22:24)}</span><b>${t}</b>${s?`<small>${s}</small>`:''}</a>`).join('')}</div>`;
+export const sect=(t,i,body,more)=>`<section class="sx"><div class="sxh"><span class="sxi">${icon(i,17)}</span><h3>${t}</h3>${more?`<a href="${more[0]}">${more[1]}</a>`:''}</div>${body}</section>`;
+export function scrollToEl(x,block='center',smooth=false){
+ const v=document.getElementById('view');if(!x||!v)return;
+ const r=x.getBoundingClientRect(),vr=v.getBoundingClientRect(),top=r.top-vr.top+v.scrollTop;
+ const t=Math.max(0,block==='center'?top-(vr.height-r.height)/2:top-110);
+ if(v.scrollTo)v.scrollTo({top:t,behavior:smooth?'smooth':'auto'});else v.scrollTop=t;
+}

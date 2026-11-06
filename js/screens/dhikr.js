@@ -9,7 +9,7 @@ export default async function render(el,arg,arg2){
  const favs=()=>S.get('afav',[]),isFav=k=>favs().some(f=>f.k===k);
  const txt=t=>esc(t||'').replace(/\n{2,}/g,'\n').replace(/\n/g,'<br>');
  el.innerHTML=parts.map(({id,list})=>`${parts.length>1?`<div class="sec"><h3>${esc(name(id))}</h3></div>`:''}${list.map(d=>{const k=`${id}:${d.n}`,n=dc.c[k]||0;
-  return `<div class="card dk${d.r&&n>=d.r?' done':''}" data-k="${k}" data-c="${esc(name(id))}"><div class="dk-t">${txt(d.t)}</div>${d.r?`<div class="sub">التكرار: ${toAr(d.r)}</div>`:''}${d.s?`<div class="sub">${esc(d.s)}</div>`:''}
+  return `<div class="card lite dk${d.r&&n>=d.r?' done':''}" data-k="${k}" data-c="${esc(name(id))}"><div class="dk-t">${txt(d.t)}</div>${d.r?`<div class="sub">التكرار: ${toAr(d.r)}</div>`:''}${d.s?`<div class="sub">${esc(d.s)}</div>`:''}
   <div class="dk-a"><button class="cnt" data-a="c" aria-label="عدّاد">${toAr(n)}${d.r?' / '+toAr(d.r):''}</button><button class="iconbtn" data-a="r" aria-label="تصفير">${icon('repeat',18)}</button><span class="grow"></span>
   <button class="iconbtn ${isFav(k)?'fav-on':''}" data-a="f" aria-label="مفضلة">${icon('heart',20)}</button><button class="iconbtn" data-a="cp" aria-label="نسخ">${icon('copy',20)}</button><button class="iconbtn" data-a="sh" aria-label="مشاركة">${icon('share',20)}</button></div></div>`}).join('')}`).join('')
   ||'<div class="empty">لا توجد أذكار في هذا الباب</div>';

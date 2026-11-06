@@ -3,8 +3,9 @@ const JUZ=[[1,1],[2,142],[2,253],[3,93],[4,24],[4,148],[5,82],[6,111],[7,88],[8,
 let tab='s';
 export default async function(el){
  const l=await surahs();
- el.innerHTML=`<div class="seg"><button data-t="s">السور</button><button data-t="j">الأجزاء</button></div>
- <label class="field" id="fd">${icon('search',20)}<input id="q" type="search" placeholder="ابحث باسم السورة أو رقمها" autocomplete="off"></label><div id="l" class="list"></div>`;
+ el.innerHTML=`<div class="chips"><a class="chip" href="#/search">${icon('search',16)} بحث في القرآن</a><a class="chip" href="#/tafsir">${icon('note',16)} التفسير</a><a class="chip" href="#/bookmarks">${icon('bookmark',16)} المحفوظات</a></div>
+ <div class="seg"><button data-t="s">السور</button><button data-t="j">الأجزاء</button></div>
+ <label class="field" id="fd">${icon('search',20)}<input id="q" type="search" placeholder="ابحث باسم السورة أو رقمها" autocomplete="off"></label><div id="l" class="card list"></div>`;
  const draw=()=>{
   el.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
   el.querySelector('#fd').style.display=tab==='s'?'flex':'none';

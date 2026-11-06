@@ -27,7 +27,7 @@
 تعمل داخل تطبيق أندرويد فقط: من قسم Prayer فعّل التنبيهات، وتُجدول لـ 7 أيام قادمة وتتجدد كلما فتحت التطبيق.
 
 ## الأقسام
-كل ميزة شاشة مستقلة في js/screens: home, library, read, audio, tafsir, search, hifz, recite, prayer(=times), azkar, ramadan, qibla, bookmarks, downloads, profile, about.
+التبويبات: الرئيسية • القرآن (المصحف، البحث، التفسير، المحفوظات) • الاستماع (التلاوات، التحفيظ، التصحيح، التحميلات) • العبادة (المواقيت، القبلة، الأذكار، الأدعية، المسبحة، رمضان) • حسابي. كل شاشة ملف في js/screens، والتصميم الزجاجي كله في css/style.css (المتغيرات في أول الملف).
 
 ## إضافة ميزة جديدة
 1. أنشئ js/screens/x.js: export default async function(el,arg){ el.innerHTML='...' }
